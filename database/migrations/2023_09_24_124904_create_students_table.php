@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('is_attend',['attend','absent'])->default('absent');
             $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('parent_id')->constrained('parents')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('parent_id')->constrained('guardians')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
