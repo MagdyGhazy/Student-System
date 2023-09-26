@@ -1,8 +1,6 @@
 <?php
 
-namespace App\inheritance\Auth;
-
-use App\Http\Controllers\Controller;
+namespace App\MainClasses\Auth;
 
 class MainAuth
 {
