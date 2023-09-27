@@ -1,11 +1,9 @@
 <?php
 namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Auth\AdminLoginRequest;
-use App\Http\Requests\Admin\Auth\AdminRegisterRequest;
 use App\Http\Requests\Guardian\Auth\GuardianLoginRequest;
 use App\Http\Requests\Guardian\Auth\GuardianRegisterRequest;
-use App\inheritance\Auth\MainAuth;
+use App\MainClasses\Auth\MainAuth;
 use App\Models\Guardian;
 
 class GuardianAuthController extends Controller

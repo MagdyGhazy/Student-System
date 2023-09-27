@@ -3,7 +3,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\Auth\StudentLoginRequest;
 use App\Http\Requests\Student\Auth\StudentRegisterRequest;
-use App\inheritance\Auth\MainAuth;
+use App\MainClasses\Auth\MainAuth;
 use App\Models\Student;
 
 class studentAuthController extends Controller

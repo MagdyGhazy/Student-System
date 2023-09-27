@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('headquarters', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->string('address');
             $table->timestamps();
         });
     }
