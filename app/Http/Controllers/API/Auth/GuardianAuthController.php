@@ -3,7 +3,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Guardian\Auth\GuardianLoginRequest;
 use App\Http\Requests\Guardian\Auth\GuardianRegisterRequest;
-use App\MainClasses\Auth\MainAuth;
+use App\Services\Auth\MainAuthService;
 use App\Models\Guardian;
 
 class GuardianAuthController extends Controller
@@ -13,7 +13,7 @@ class GuardianAuthController extends Controller
     public function __construct(Guardian $guardian)
     {
         $this->middleware("auth:guardian", ['except' => ['login', 'register']]);
-        $this->mainAuth = new MainAuth($guardian,"guardian");
+        $this->mainAuth = new MainAuthService($guardian,"guardian");
     }
 
     public function login(GuardianLoginRequest $request)

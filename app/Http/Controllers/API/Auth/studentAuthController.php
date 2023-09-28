@@ -3,7 +3,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\Auth\StudentLoginRequest;
 use App\Http\Requests\Student\Auth\StudentRegisterRequest;
-use App\MainClasses\Auth\MainAuth;
+use App\Services\Auth\MainAuthService;
 use App\Models\Student;
 
 class studentAuthController extends Controller
@@ -13,7 +13,7 @@ class studentAuthController extends Controller
     public function __construct(Student $student)
     {
         $this->middleware("auth:student", ['except' => ['login', 'register']]);
-        $this->mainAuth = new MainAuth($student,"student");
+        $this->mainAuth = new MainAuthService($student,"student");
     }
 
     public function login(StudentLoginRequest $request)

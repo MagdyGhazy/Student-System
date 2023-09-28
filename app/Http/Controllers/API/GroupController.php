@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\System\Groups\FindGroupIdRequest;
 use App\Http\Requests\System\Groups\StoreGroupRequest;
 use App\Http\Requests\System\Groups\UpdateGroupRequest;
-use App\MainClasses\CRUD\SystemCRUD;
+use App\Services\CRUD\SystemCRUDService;
 use App\Models\Group;
 
 class GroupController extends Controller
@@ -14,7 +14,7 @@ class GroupController extends Controller
     protected $systemCRUD;
     public function __construct(Group $model)
     {
-        $this->systemCRUD = new SystemCRUD($model);
+        $this->systemCRUD = new SystemCRUDService($model);
     }
 
     public function index()

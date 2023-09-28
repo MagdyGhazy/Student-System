@@ -23,6 +23,9 @@ class Student extends Authenticatable implements JWTSubject
         'group_id',
         'parent_id',
     ];
+
+    protected $guarded = ['is_attend','change_group'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -57,6 +60,8 @@ class Student extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+
 }
 
 

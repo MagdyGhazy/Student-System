@@ -1,8 +1,8 @@
 <?php
 
-namespace App\MainClasses\Auth;
+namespace App\Services\Auth;
 
-class MainAuth
+class MainAuthService
 {
     protected $model;
     protected $guard;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\MainClasses\Command;
+namespace App\Services\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
 
-abstract class FileFactoryCommand extends Command
+abstract class FileFactoryCommandService extends Command
 {
     protected $file;
 

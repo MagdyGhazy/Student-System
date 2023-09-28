@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\MainClasses\Command\FileFactoryCommand;
+use App\Services\Command\FileFactoryCommandService;
 use Illuminate\Console\Command;
 
-class MakeServicesCommand extends FileFactoryCommand
+class MakeServicesCommandService extends FileFactoryCommandService
 {
 
     protected $signature = "make:service {name}";

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\System\Grades\FindGradeIdRequest;
 use App\Http\Requests\System\Grades\StoreGradeRequest;
 use App\Http\Requests\System\Grades\UpdateGradeRequest;
-use App\MainClasses\CRUD\SystemCRUD;
+use App\Services\CRUD\SystemCRUDService;
 use App\Models\Grade;
 
 class GradeController extends Controller
@@ -14,7 +14,7 @@ class GradeController extends Controller
     protected $systemCRUD;
     public function __construct(Grade $model)
     {
-        $this->systemCRUD = new SystemCRUD($model);
+        $this->systemCRUD = new SystemCRUDService($model);
     }
 
     public function index()

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\System\Headquarters\FindHeadquarterIdRequest;
 use App\Http\Requests\System\Headquarters\StoreHeadquarterRequest;
 use App\Http\Requests\System\Headquarters\UpdateHeadquarterRequest;
-use App\MainClasses\CRUD\SystemCRUD;
+use App\Services\CRUD\SystemCRUDService;
 use App\Models\Headquarter;
 
 class HeadquarterController extends Controller
@@ -14,7 +14,7 @@ class HeadquarterController extends Controller
     protected $systemCRUD;
     public function __construct(Headquarter $model)
     {
-        $this->systemCRUD = new SystemCRUD($model);
+        $this->systemCRUD = new SystemCRUDService($model);
     }
 
     public function index()

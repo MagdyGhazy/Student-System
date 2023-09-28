@@ -27,7 +27,6 @@ class UpdateGroupRequest extends FormRequest
             'grade_id' => 'required|exists:grades,id',
             'day' => 'required|string|min:2',
             'start_at' => 'required|string',
-            'end_at' => 'required|string',
         ];
     }
 }

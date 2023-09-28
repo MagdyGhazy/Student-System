@@ -12,10 +12,10 @@ class Group extends Model
      protected $fillable = [
             'day',
             'start_at',
-            'end_at',
             'headquarter_id',
             'grade_id',
      ];
+     protected $guarded = ['is_started','is_ended'];
 
      public function grade()
      {
@@ -25,6 +25,10 @@ class Group extends Model
     public function headquarter()
     {
         return $this->belongsTo(Headquarter::class);
+    }
+    public function student()
+    {
+        return $this->hasMany(Student::class);
     }
 
 }

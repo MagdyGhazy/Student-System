@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\System\Groups;
+namespace App\Http\Requests\Student;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FindGroupIdRequest extends FormRequest
+class FindStudentIdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class FindGroupIdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'group_id' => 'required|exists:groups,id',
+            'student_id' => 'required|exists:students,id',
         ];
     }
 }

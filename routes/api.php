@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AbsenceController;
 use App\Http\Controllers\API\Auth\AdminAuthController;
 use App\Http\Controllers\API\Auth\GuardianAuthController;
 use App\Http\Controllers\API\Auth\studentAuthController;
@@ -102,3 +103,15 @@ Route::prefix('groups')->group(function () {
     });
 });
 /* -------- END GROUPS ROUTS -------- */
+
+
+/* -------- START ATTENDANCE ROUTS -------- */
+Route::prefix('attendance')->group(function () {
+
+    Route::controller(AbsenceController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
+        Route::post('/start-attendance', 'startAttendance');
+        Route::post('/take-student-attendance', 'takeStudentAttendance');
+        Route::post('/end-attendance', 'endAttendance');
+    });
+});
+/* -------- END ATTENDANCE ROUTS -------- */

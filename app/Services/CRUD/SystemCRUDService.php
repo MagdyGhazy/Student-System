@@ -1,8 +1,8 @@
 <?php
 
-namespace App\MainClasses\CRUD;
+namespace App\Services\CRUD;
 
-class SystemCRUD
+class SystemCRUDService
 {
     protected $model;
     public function __construct($model)

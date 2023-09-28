@@ -3,7 +3,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auth\AdminLoginRequest;
 use App\Http\Requests\Admin\Auth\AdminRegisterRequest;
-use App\MainClasses\Auth\MainAuth;
+use App\Services\Auth\MainAuthService;
 use App\Models\Admin;
 
 class AdminAuthController extends Controller
@@ -13,7 +13,7 @@ class AdminAuthController extends Controller
     public function __construct(Admin $admin)
     {
         $this->middleware("auth:admin", ['except' => ['login', 'register']]);
-        $this->mainAuth = new MainAuth($admin,"admin");
+        $this->mainAuth = new MainAuthService($admin,"admin");
     }
 
     public function login(AdminLoginRequest $request)
