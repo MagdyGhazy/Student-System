@@ -21,10 +21,11 @@ class Student extends Authenticatable implements JWTSubject
         'phone',
         'grade_id',
         'group_id',
+        'change_group_id',
         'parent_id',
     ];
 
-    protected $guarded = ['is_attend','change_group'];
+    protected $guarded = ['status','change_group'];
 
     /**
      * The attributes that should be hidden for arrays.

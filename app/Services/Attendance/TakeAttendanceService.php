@@ -2,7 +2,6 @@
 
 namespace App\Services\Attendance;
 
-use App\Models\Group;
 use App\Reposetoris\Attendance\AttendanceRepo;
 
 class TakeAttendanceService
@@ -13,53 +12,80 @@ class TakeAttendanceService
         $this->attendanceRepo = new AttendanceRepo();
     }
 
+    /** -----------Start Group Attendance----------- **/
 
-    public function startGroupAttendance($group_id)
+    public function startGroupAttendance($request)
     {
-        $data['is_started'] = true;
-        $data['is_ended'] = false;
-        $this->attendanceRepo->startEndGroupAttendance($data,$group_id);
-        return response()->json(["message"=>"Attendance Starts"]);
+        $group_id =$request->group_id;
+        $students = $request->students;
+
+        $groupAllStudents = $this->getStartedGroupStudents($group_id);
+
+        $this->makeAttendance($groupAllStudents,$students);
+        $this->makeAbsence($groupAllStudents);
+
+        $this->revertStatus($group_id);
+
+        return response()->json(["message" => "Attendance Taken"]);
     }
 
-    public function endGroupAttendance($group_id)
+    public function getStartedGroupStudents($group_id)
     {
-        $data['is_started'] = false;
-        $data['is_ended'] = true;
-        $this->attendanceRepo->startEndGroupAttendance($data,$group_id);
-        $absenceStudents = $this->attendanceRepo->getAbsenceStudents($group_id);
-        $this->takeStudentAbsence($absenceStudents,$group_id);
-        $this->revertStudentAttendStatus($group_id);
-        return response()->json([
-            "message" => "Absence has been Taken"
-        ]);
-    }
+        $groupAllStudents =  $this->attendanceRepo->getGroupStudentsAttendance($group_id);;
 
-    public function takeStudentAttendance($student_id)
-    {
-        $data['is_attend'] = true;
-        $this->attendanceRepo->TakeAttendance($student_id,$data);
-        return response()->json(["message"=>"Student Attendance has been Taken"]);
-    }
-
-    public function takeStudentAbsence($absenceStudents,$group_id)
-    {
-        foreach ($absenceStudents as $student)
+        foreach ($groupAllStudents as $student)
         {
-            $data['day'] =now();
-            $data['student_id'] =$student->id;
-            $data['group_id'] =$group_id;
-            $this->attendanceRepo->TakeAbsence($data);
+            if ($student['change_group'] == false || $student['change_group_id'] == $group_id )
+            {
+                $groupStudents[] = $student['id'];
+            }
+        }
+        return $groupStudents;
+    }
+
+    public function makeAttendance($groupAllStudents,$students)
+    {
+        foreach ($students as $student) {
+            if (in_array($student, $groupAllStudents)) {
+                $this->attendanceRepo->makeAttend($student);
+            }
         }
     }
 
-    public function revertStudentAttendStatus($group_id)
+    public function makeAbsence($groupAllStudents)
     {
-        $students = $this->attendanceRepo->revertStudentAttendStatus($group_id);
-        foreach ($students as $student)
-        {
-            $student->setAttribute('is_attend',false)->save();
+        $Absencestudents = $this->attendanceRepo->getAbsenceStudents($groupAllStudents);
+
+        foreach ($Absencestudents as $student) {
+            $this->attendanceRepo->makeAbsent($student);
         }
+    }
+
+
+
+    public function revertStatus($group_id)
+    {
+        $groupMainStudents =  $this->attendanceRepo->getGroupMainStudents($group_id);
+        foreach ($groupMainStudents as $student) {
+            if ($student['status'] == "attend")
+            {
+                $this->attendanceRepo->revertStatus($student);
+            }
+            elseif ($student['status'] == "absent")
+            {
+                $this->TakeAbsence($student,$group_id);
+                $this->attendanceRepo->revertStatus($student);
+            }
+        }
+    }
+
+
+    public function TakeAbsence($student,$group_id)
+    {
+        $data['day'] = now();
+        $data['student_id'] = $student['id'];
+        $data['group_id'] = $group_id;
+        $this->attendanceRepo->TakeAbsence($data);
     }
 
 }

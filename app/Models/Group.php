@@ -15,7 +15,6 @@ class Group extends Model
             'headquarter_id',
             'grade_id',
      ];
-     protected $guarded = ['is_started','is_ended'];
 
      public function grade()
      {
@@ -28,7 +27,12 @@ class Group extends Model
     }
     public function student()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Student::class,'group_id');
+    }
+
+    public function changedStudent()
+    {
+        return $this->hasMany(Student::class,'change_group_id');
     }
 
 }

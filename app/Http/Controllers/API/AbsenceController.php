@@ -18,19 +18,8 @@ class AbsenceController extends Controller
         return $this->TakeAttendanceService = $takeAttendanceService;
     }
 
-    public function startAttendance(FindGroupIdRequest $request)
+    public function startGroupAttendance(FindGroupIdRequest $request)
     {
-       return $this->TakeAttendanceService->startGroupAttendance($request->group_id);
+        return $this->TakeAttendanceService->startGroupAttendance($request);
     }
-
-    public function takeStudentAttendance(FindStudentIdRequest $request)
-    {
-      return  $this->TakeAttendanceService->takeStudentAttendance($request->student_id);
-    }
-
-    public function endAttendance(FindGroupIdRequest $request)
-    {
-        return $this->TakeAttendanceService->endGroupAttendance($request->group_id);
-    }
-
 }

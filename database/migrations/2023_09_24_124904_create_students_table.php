@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('phone');
-            $table->boolean('is_attend')->default(false);
+            $table->enum('status',['attend','idle','absent'])->default('idle');
             $table->boolean('change_group')->default(false);
+            $table->integer('change_group_id')->default(null);
+            $table->integer('group_id');
             $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('parent_id')->constrained('guardians')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

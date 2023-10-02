@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->text('day');
             $table->time('start_at');
-            $table->boolean('is_started')->default(false);
-            $table->boolean('is_ended')->default(true);
             $table->foreignId('headquarter_id')->constrained('headquarters')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

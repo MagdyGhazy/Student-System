@@ -3,61 +3,47 @@
 namespace App\Reposetoris\Attendance;
 
 use App\Models\Absence;
-use App\Models\Group;
 use App\Models\Student;
 
 class AttendanceRepo
 {
-    public function getGroup($id)
-    {
-        return  Group::findOrFail($id);
 
-    }
-    public function startEndGroupAttendance($data,$group_id)
+    public function getGroupStudentsAttendance($group_id)
     {
-        $group = $this->getGroup($group_id);
-        $group->setAttribute('is_started',$data['is_started']);
-        $group->setAttribute('is_ended',$data['is_ended']);
-        $group->save();
-
+        return Student::where('group_id',$group_id)->orWhere('change_group_id',$group_id)->get();
     }
 
-    public function getStartedGroup()
+    public function getGroupMainStudents($group_id)
     {
-        $group = Group::with('student')->whereIs_started(true)->get();
-        return $group;
+        return Student::where('group_id',$group_id)->get();
     }
 
-    public function getGroupStudents()
+    public function makeAttend($student_id)
     {
-        $groups = $this->getStartedGroup();
-        $students = [];
-        foreach ($groups as $group) {
-            $students = $group->student;
-        }
-        return $students;
+        $student = Student::find($student_id);
+        $student->setAttribute('status','attend')->save();
     }
 
-    public function TakeAttendance($student_id,$data)
+    public function getAbsenceStudents($students)
     {
-        $students = $this->getGroupStudents();
-        $student = $students->where("id",$student_id)->first();
-        $student->setAttribute('is_attend',$data['is_attend'])->save();
+        return Student::whereIn('id', $students)->where('status','<>', true)->get();
     }
 
-    public function getAbsenceStudents($group_id)
+    public function makeAbsent($student)
     {
-        return Student::where("group_id",$group_id)->where("change_group",false)->where("is_attend",false)->get() ;
+        $student->setAttribute('status','absent')->save();
     }
 
     public function TakeAbsence($data)
     {
-        Absence::create($data);
+         Absence::create($data);
     }
 
-    public function revertStudentAttendStatus($group_id)
+    public function revertStatus($student)
     {
-        return Student::where("group_id",$group_id)->where("change_group",false)->where("is_attend",true)->get() ;
+        $student->setAttribute('status','idle');
+        $student->setAttribute('change_group',false);
+        $student->setAttribute('change_group_id',null);
+        $student->save();
     }
-
 }

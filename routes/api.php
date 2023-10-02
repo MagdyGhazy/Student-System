@@ -52,7 +52,7 @@ Route::prefix('auth')->group(function () {
 /* -------- END AUTH ROUTS -------- */
 
 
-/* -------- START GRADES ROUTS -------- */
+/** -------- START GRADES ROUTS -------- */
 Route::prefix('grades')->group(function () {
 
     Route::controller(GradeController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
@@ -66,11 +66,12 @@ Route::prefix('grades')->group(function () {
         Route::post('/show-grade', 'getOne');
     });
 });
-/* -------- END GRADES ROUTS -------- */
+/** -------- END GRADES ROUTS -------- */
 
 
 
-/* -------- START HEADQUARTER ROUTS -------- */
+/** -------- START HEADQUARTER ROUTS -------- **/
+
 Route::prefix('headquarters')->group(function () {
 
     Route::controller(HeadquarterController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
@@ -84,11 +85,12 @@ Route::prefix('headquarters')->group(function () {
         Route::post('/show-headquarter', 'getOne');
     });
 });
-/* -------- END HEADQUARTER ROUTS -------- */
+
+/** -------- END HEADQUARTER ROUTS -------- **/
 
 
 
-/* -------- START GROUPS ROUTS -------- */
+/** -------- START GROUPS ROUTS -------- */
 Route::prefix('groups')->group(function () {
 
     Route::controller(GroupController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
@@ -102,16 +104,14 @@ Route::prefix('groups')->group(function () {
         Route::post('/show-group', 'getOne');
     });
 });
-/* -------- END GROUPS ROUTS -------- */
+/** -------- END GROUPS ROUTS -------- */
 
 
-/* -------- START ATTENDANCE ROUTS -------- */
+/** -------- START ATTENDANCE ROUTS -------- */
 Route::prefix('attendance')->group(function () {
 
     Route::controller(AbsenceController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
-        Route::post('/start-attendance', 'startAttendance');
-        Route::post('/take-student-attendance', 'takeStudentAttendance');
-        Route::post('/end-attendance', 'endAttendance');
+        Route::post('/start-attendance', 'startGroupAttendance');
     });
 });
-/* -------- END ATTENDANCE ROUTS -------- */
+/** -------- END ATTENDANCE ROUTS -------- */
