@@ -3,6 +3,7 @@
 namespace App\Services\Attendance;
 
 use App\Reposetoris\Attendance\AttendanceRepo;
+use function Laravel\Prompts\password;
 
 class TakeAttendanceService
 {
@@ -12,7 +13,6 @@ class TakeAttendanceService
         $this->attendanceRepo = new AttendanceRepo();
     }
 
-    /** -----------Start Group Attendance----------- **/
 
     public function startGroupAttendance($request)
     {
@@ -21,17 +21,16 @@ class TakeAttendanceService
 
         $groupAllStudents = $this->getStartedGroupStudents($group_id);
 
-        $this->makeAttendance($groupAllStudents,$students);
-        $this->makeAbsence($groupAllStudents);
+        $this->takeAttendance($groupAllStudents,$students,$group_id);
 
-        $this->revertStatus($group_id);
-
+        $this->revertStatus();
         return response()->json(["message" => "Attendance Taken"]);
     }
 
+
     public function getStartedGroupStudents($group_id)
     {
-        $groupAllStudents =  $this->attendanceRepo->getGroupStudentsAttendance($group_id);;
+        $groupAllStudents =  $this->attendanceRepo->getGroupStudentsAttendance($group_id);
 
         foreach ($groupAllStudents as $student)
         {
@@ -43,49 +42,41 @@ class TakeAttendanceService
         return $groupStudents;
     }
 
-    public function makeAttendance($groupAllStudents,$students)
+
+
+    public function takeAttendance($groupAllStudents,$students,$group_id)
     {
-        foreach ($students as $student) {
-            if (in_array($student, $groupAllStudents)) {
+        foreach ($groupAllStudents as $student) {
+            if (in_array($student, $students)) {
                 $this->attendanceRepo->makeAttend($student);
-            }
-        }
-    }
-
-    public function makeAbsence($groupAllStudents)
-    {
-        $Absencestudents = $this->attendanceRepo->getAbsenceStudents($groupAllStudents);
-
-        foreach ($Absencestudents as $student) {
+            }else{
             $this->attendanceRepo->makeAbsent($student);
-        }
-    }
-
-
-
-    public function revertStatus($group_id)
-    {
-        $groupMainStudents =  $this->attendanceRepo->getGroupMainStudents($group_id);
-        foreach ($groupMainStudents as $student) {
-            if ($student['status'] == "attend")
-            {
-                $this->attendanceRepo->revertStatus($student);
-            }
-            elseif ($student['status'] == "absent")
-            {
-                $this->TakeAbsence($student,$group_id);
-                $this->attendanceRepo->revertStatus($student);
+            $this->takeAbsence($student, $group_id);
             }
         }
     }
 
 
-    public function TakeAbsence($student,$group_id)
+    public function takeAbsence($student,$group_id)
     {
         $data['day'] = now();
-        $data['student_id'] = $student['id'];
+        $data['student_id'] = $student;
         $data['group_id'] = $group_id;
         $this->attendanceRepo->TakeAbsence($data);
     }
 
+    public function revertStatus()
+    {
+        $idle = $this->attendanceRepo->checkToRevert();
+        if ($idle == null)
+        {
+            $allStudents = $this->attendanceRepo->getAllStudents();
+
+            foreach ($allStudents as  $student)
+            {
+                $this->attendanceRepo->revertStatus($student);
+            }
+        }
+    }
 }
+

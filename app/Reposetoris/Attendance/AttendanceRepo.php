@@ -13,10 +13,6 @@ class AttendanceRepo
         return Student::where('group_id',$group_id)->orWhere('change_group_id',$group_id)->get();
     }
 
-    public function getGroupMainStudents($group_id)
-    {
-        return Student::where('group_id',$group_id)->get();
-    }
 
     public function makeAttend($student_id)
     {
@@ -24,19 +20,26 @@ class AttendanceRepo
         $student->setAttribute('status','attend')->save();
     }
 
-    public function getAbsenceStudents($students)
-    {
-        return Student::whereIn('id', $students)->where('status','<>', true)->get();
-    }
 
-    public function makeAbsent($student)
+    public function makeAbsent($student_id)
     {
+        $student = Student::find($student_id);
         $student->setAttribute('status','absent')->save();
     }
 
     public function TakeAbsence($data)
     {
          Absence::create($data);
+    }
+
+    public function checkToRevert()
+    {
+        return Student::where('status','idle')->first();
+    }
+
+    public function getAllStudents()
+    {
+        return Student::all();
     }
 
     public function revertStatus($student)
