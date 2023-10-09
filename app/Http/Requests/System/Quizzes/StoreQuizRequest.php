@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\System\Groups;
+namespace App\Http\Requests\System\Quizzes;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateGroupRequest extends FormRequest
+class StoreQuizRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,9 @@ class UpdateGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:groups,id',
-            'headquarter_id' => 'required|exists:headquarters,id',
+            'name' => 'required|string|min:2',
+            'day' => 'required',
             'grade_id' => 'required|exists:grades,id',
-            'days' => 'required|array|min:2',
-            'start_at' => 'required',
         ];
     }
 }

@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->json('days');
-            $table->time('start_at');
-            $table->foreignId('headquarter_id')->constrained('headquarters')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('title');
+            $table->json('answers');
+            $table->string('correct_answer');
+            $table->tinyInteger('points');
+            $table->foreignId('quiz_id')->references('id')->on('quizzes')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('questions');
     }
 };

@@ -2,6 +2,8 @@
 
 namespace App\Services\CRUD;
 
+use App\Models\Question;
+
 class SystemCRUDService
 {
     protected $model;

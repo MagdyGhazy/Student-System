@@ -10,11 +10,14 @@ class Group extends Model
     use HasFactory;
 
      protected $fillable = [
-            'day',
+            'days',
             'start_at',
             'headquarter_id',
             'grade_id',
      ];
+    protected $casts = [
+        'days' => 'array',
+    ];
 
      public function grade()
      {

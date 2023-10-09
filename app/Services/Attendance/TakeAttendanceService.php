@@ -2,7 +2,7 @@
 
 namespace App\Services\Attendance;
 
-use App\Reposetoris\Attendance\AttendanceRepo;
+use App\Repositories\Attendance\AttendanceRepo;
 use function Laravel\Prompts\password;
 
 class TakeAttendanceService

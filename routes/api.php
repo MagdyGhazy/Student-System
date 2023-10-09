@@ -7,6 +7,8 @@ use App\Http\Controllers\API\Auth\studentAuthController;
 use App\Http\Controllers\API\GradeController;
 use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\HeadquarterController;
+use App\Http\Controllers\API\QuestionController;
+use App\Http\Controllers\API\QuizController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -52,7 +54,8 @@ Route::prefix('auth')->group(function () {
 /* -------- END AUTH ROUTS -------- */
 
 
-/** -------- START GRADES ROUTS -------- */
+
+/* -------- START GRADES ROUTS -------- */
 Route::prefix('grades')->group(function () {
 
     Route::controller(GradeController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
@@ -66,12 +69,11 @@ Route::prefix('grades')->group(function () {
         Route::post('/show-grade', 'getOne');
     });
 });
-/** -------- END GRADES ROUTS -------- */
+/* -------- END GRADES ROUTS -------- */
 
 
 
-/** -------- START HEADQUARTER ROUTS -------- **/
-
+/* -------- START HEADQUARTER ROUTS -------- */
 Route::prefix('headquarters')->group(function () {
 
     Route::controller(HeadquarterController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
@@ -85,12 +87,12 @@ Route::prefix('headquarters')->group(function () {
         Route::post('/show-headquarter', 'getOne');
     });
 });
-
-/** -------- END HEADQUARTER ROUTS -------- **/
-
+/* -------- END HEADQUARTER ROUTS -------- */
 
 
-/** -------- START GROUPS ROUTS -------- */
+
+
+/* -------- START GROUPS ROUTS -------- */
 Route::prefix('groups')->group(function () {
 
     Route::controller(GroupController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
@@ -104,14 +106,53 @@ Route::prefix('groups')->group(function () {
         Route::post('/show-group', 'getOne');
     });
 });
-/** -------- END GROUPS ROUTS -------- */
+/* -------- END GROUPS ROUTS -------- */
 
 
-/** -------- START ATTENDANCE ROUTS -------- */
-Route::prefix('attendance')->group(function () {
 
-    Route::controller(AbsenceController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
-        Route::post('/start-attendance', 'startGroupAttendance');
+
+/* -------- START ATTENDANCE ROUTS -------- */
+    Route::prefix('attendance')->group(function () {
+        Route::controller(AbsenceController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
+            Route::post('/start-attendance', 'startGroupAttendance');
+        });
+    });
+/* -------- END ATTENDANCE ROUTS -------- */
+
+
+
+
+/* -------- START Quizzes ROUTS -------- */
+Route::prefix('quizzes')->group(function () {
+
+    Route::controller(QuizController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
+        Route::post('/add-quiz', 'store');
+        Route::post('/update-quiz', 'update');
+        Route::post('/delete-quiz', 'delete');
+    });
+
+    Route::controller(QuizController::class)->group(function () {
+        Route::get('/all-quizzes', 'index');
+        Route::post('/show-quiz', 'getOne');
     });
 });
-/** -------- END ATTENDANCE ROUTS -------- */
+/* -------- END Quizzes ROUTS -------- */
+
+
+
+
+/* -------- START Questions ROUTS -------- */
+Route::prefix('questions')->group(function () {
+
+    Route::controller(QuestionController::class)->prefix('admins')->middleware('auth:admin')->group(function () {
+        Route::post('/add-question', 'store');
+        Route::post('/update-question', 'update');
+        Route::post('/delete-question', 'delete');
+    });
+
+    Route::controller(QuestionController::class)->group(function () {
+        Route::get('/all-questions', 'index');
+        Route::post('/show-question', 'getOne');
+    });
+});
+/* -------- END Questions ROUTS -------- */

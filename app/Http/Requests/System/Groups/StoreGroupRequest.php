@@ -24,8 +24,8 @@ class StoreGroupRequest extends FormRequest
         return [
             'headquarter_id' => 'required|exists:headquarters,id',
             'grade_id' => 'required|exists:grades,id',
-            'day' => 'required|string|min:2',
-            'start_at' => 'required|string',
+            'days' => 'required',
+            'start_at' => 'required',
         ];
     }
 }

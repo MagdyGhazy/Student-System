@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Reposetoris\Attendance;
+namespace App\Repositories\Attendance;
 
 use App\Models\Absence;
 use App\Models\Student;
