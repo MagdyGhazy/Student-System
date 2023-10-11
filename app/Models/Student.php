@@ -2,6 +2,7 @@
 namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -16,7 +17,6 @@ class Student extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
         'phone',
         'grade_id',
@@ -60,6 +60,26 @@ class Student extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims() {
         return [];
+    }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function changeGroup(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function grade(): BelongsTo
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Guardian::class);
     }
 
 

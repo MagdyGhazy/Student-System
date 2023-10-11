@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->string('email');
-            $table->string('password');
             $table->string('phone');
+            $table->string('password')->default(000000);
             $table->enum('status',['attend','idle','absent'])->default('idle');
             $table->boolean('change_group')->default(false);
-            $table->integer('change_group_id')->default(null);
-            $table->integer('group_id');
+            $table->foreignId('change_group_id')->default(null)->constrained('groups')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('parent_id')->constrained('guardians')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

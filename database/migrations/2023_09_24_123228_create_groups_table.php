@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
+            $table->text('name');
             $table->json('days');
             $table->time('start_at');
             $table->foreignId('headquarter_id')->constrained('headquarters')->cascadeOnUpdate()->cascadeOnDelete();

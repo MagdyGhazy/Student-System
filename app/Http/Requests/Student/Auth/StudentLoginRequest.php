@@ -22,7 +22,7 @@ class StudentLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
+            'phone' => 'required|string|min:6',
             'password' => 'required|string|min:6',
         ];
     }

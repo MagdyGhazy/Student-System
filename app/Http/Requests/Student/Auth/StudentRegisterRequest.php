@@ -23,7 +23,6 @@ class StudentRegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:students',
             'password' => 'required|string|min:6',
             'phone' => 'required|string|min:6',
             'grade_id' => 'required|integer',
