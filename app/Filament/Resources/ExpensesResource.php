@@ -42,18 +42,18 @@ class ExpensesResource extends Resource
                 Forms\Components\Select::make('month')
                     ->label('Select month')
                     ->options([
-                        'Jan' => 'Jan',
-                        'Feb' => 'Feb',
-                        'Mar' => 'Mar',
-                        'Apr' => 'Apr',
-                        'May' => 'May',
-                        'Jun' => 'Jun',
-                        'Jul' => 'Jul',
-                        'Aug' => 'Aug',
-                        'Sep' => 'Sep',
-                        'Oct' => 'Oct',
-                        'Nov' => 'Nov',
-                        'Dec' => 'Dec',
+                        '1' => 'Jan',
+                        '2' => 'Feb',
+                        '3' => 'Mar',
+                        '4' => 'Apr',
+                        '5' => 'May',
+                        '6' => 'Jun',
+                        '7' => 'Jul',
+                        '8' => 'Aug',
+                        '9' => 'Sep',
+                        '10' => 'Oct',
+                        '11' => 'Nov',
+                        '12' => 'Dec',
                     ])
                     ->required(),
             ]);
