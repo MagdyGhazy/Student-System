@@ -24,6 +24,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->brandName('Al-Safty Center')
             ->id('admin')
             ->path('admin')
             ->login()
@@ -54,5 +55,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
     }
 }

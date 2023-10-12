@@ -83,6 +83,12 @@ class Student extends Authenticatable implements JWTSubject
     }
 
 
+    public function expensis()
+    {
+        return $this->belongsToMany(Expenses::class,'student_expenses');
+    }
+
+
 }
 
 

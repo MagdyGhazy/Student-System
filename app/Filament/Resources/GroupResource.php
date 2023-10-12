@@ -26,18 +26,8 @@ class GroupResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('days')
+                Forms\Components\TagsInput::make('days')
                     ->label('Select days')
-                    ->options([
-                        'sat' => 'sat',
-                        'sun' => 'sun',
-                        'mon' => 'mon',
-                        'tue' => 'tue',
-                        'wed' => 'wed',
-                        'thu' => 'thu',
-                        'fri' => 'fri',
-                    ])
-                    ->multiple()
                     ->required(),
                 Forms\Components\TimePicker::make('start_at')
                     ->required(),
