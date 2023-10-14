@@ -19,7 +19,7 @@ class Overview extends BaseWidget
         $currentMonth = Carbon::now()->format('m');
 
         return [
-            Stat::make('الطلاب اللي دفعوا المصاريف',Expenses::query()->where('month', $currentMonth)->count()),
+            Stat::make("الطلاب اللي دفعوا مصاريف شهر [ $currentMonth ] ",Expenses::query()->where('month', $currentMonth)->count()),
             Stat::make('الطلاب',Student::count()),
             Stat::make('الاختبارات',Quiz::count()),
             Stat::make('مجموعات',Group::count()),
