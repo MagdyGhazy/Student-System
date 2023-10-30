@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->string('phone');
-            $table->string('password')->default(000000);
+            $table->string('password');
             $table->enum('status',['attend','idle','absent'])->default('idle');
             $table->boolean('change_group')->default(false);
             $table->foreignId('change_group_id')->default(null)->constrained('groups')->cascadeOnDelete()->cascadeOnUpdate();

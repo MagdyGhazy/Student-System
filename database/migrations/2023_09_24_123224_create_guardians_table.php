@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->string('phone');
-            $table->string('password')->default(000000);
+            $table->string('password');
             $table->timestamps();
         });
     }
